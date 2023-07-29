@@ -14,7 +14,7 @@ export default {
       textColor: { 1: '#d0d0d0', 2: '#8b8b8b' },
       backgroundColor: { 1: '#0e0f11', 2: '#222222' },
       colors: { brand: '#fff' },
-      borderColor: { DEFAULT: '#313131' },
+      borderColor: { DEFAULT: '#313131', default: '#313131' },
       spacing: {
         'fluid-1': 'clamp(0.25rem, calc(-0.09rem + 1.71vw), 1.13rem)',
         'fluid-2': 'clamp(0.5rem, calc(0.11rem + 1.95vw), 1.5rem)',
