@@ -1,9 +1,9 @@
-import Header from '@/components/header';
 import type { Metadata } from 'next';
 import { Kaisei_Tokumin, Maitree } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { twJoin } from 'tailwind-merge';
 import 'tailwindcss/tailwind.css';
+import Header from './header';
 
 const taviraj = Maitree({
   weight: ['400', '700'],
