@@ -1,11 +1,10 @@
 'use client';
 
-import type { RecentPosts } from '@/libs/supabase';
-import { formatDate } from '@/libs/utils';
+import { formatDate } from '@/libs/formatter';
 import { User } from 'lucide-react';
 import Link from 'next/link';
 
-export default function PostCard(post: RecentPosts[number]) {
+export default function PostCard(post: any) {
   return (
     <Link
       href="/"
@@ -13,7 +12,7 @@ export default function PostCard(post: RecentPosts[number]) {
     >
       <div className="text-12 flex items-center justify-between text-xs text-2">
         <div className="flex items-center gap-2">
-          <User size={14} aria-hidden /> {post.sitename}
+          <User size={14} aria-hidden /> {post.site?.name}
         </div>
         <time dateTime={new Date(post.pub_date).toISOString()}>{formatDate(post.pub_date)}</time>
       </div>

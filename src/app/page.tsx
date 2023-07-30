@@ -4,7 +4,7 @@ import { NextAnchor } from '@/components/ui/anchor';
 import { Tab, Tabs } from '@/components/ui/tabs';
 import supabase from '@/libs/supabase';
 import { ArrowRight } from 'lucide-react';
-import releases from '../components/stub';
+import releases from '../stub';
 
 async function getData() {
   const { data: recentPosts } = await supabase.rpc('get_recent_posts');
@@ -26,18 +26,24 @@ export default async function HomePage() {
       <section>
         <Tabs values={['recent posts', 'recent releases']}>
           <Tab value="recent posts" className="flex flex-col gap-8">
-            {/* prettier-ignore */}
             <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {recentPosts?.map((post) => (<li key={post.slug}><PostCard {...post} /></li>))}
+              {recentPosts?.map((post) => (
+                <li key={post.slug}>
+                  <PostCard {...post} />
+                </li>
+              ))}
             </ul>
             <NextAnchor href="/" className="self-end">
               view all posts <ArrowRight size={16} aria-hidden />
             </NextAnchor>
           </Tab>
           <Tab value="recent releases">
-            {/* prettier-ignore */}
             <ul className="flex flex-col gap-8">
-              {releases?.map((release) => (<li key={release.url}><ReleaseCard {...release} /></li>))}
+              {releases?.map((release) => (
+                <li key={release.url}>
+                  <ReleaseCard {...release} />
+                </li>
+              ))}
             </ul>
           </Tab>
         </Tabs>

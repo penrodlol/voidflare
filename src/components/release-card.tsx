@@ -1,6 +1,6 @@
 'use client';
 
-import { formatDate } from '@/libs/utils';
+import { formatDate } from '@/libs/formatter';
 import { User } from 'lucide-react';
 
 export default function ReleaseCard(release: any) {
