@@ -49,7 +49,8 @@ export default async function Page(props: { params: { page: string } }) {
         <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {posts.map((post) => (
             <li key={post.slug}>
-              <Card.Internal href="/">
+              {/* @ts-ignore */}
+              <Card.Internal href={`/posts/sites/${post.site.slug}/${post.slug}`}>
                 <Card.Header>
                   <p className="flex items-center gap-2">
                     <User size={14} aria-hidden /> {post.site?.name}
