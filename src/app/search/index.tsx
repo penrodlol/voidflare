@@ -1,8 +1,8 @@
 'use client';
 
-import Button from '@/components/ui/button';
-import Input, { type InputProps } from '@/components/ui/input';
 import { searchSchema } from '@/libs/schema';
+import Button from '@/ui/button';
+import Input, { type InputProps } from '@/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SearchIcon } from 'lucide-react';
 import { useTransition } from 'react';
@@ -29,13 +29,17 @@ export default function Search(props: InputProps) {
   }
 
   return (
-    <form className="flex gap-2" action={onAction}>
+    <form
+      className="flex items-center gap-2 rounded border bg-2/10 p-5 text-xs shadow"
+      action={onAction}
+    >
       <Input {...props} className="flex-1" icon={<SearchIcon />} {...register('search')} />
       <Button type="submit" disabled={!isDirty || !isValid || isPending}>
         search
       </Button>
       <Button
         type="reset"
+        color="outline"
         onClick={onReset}
         disabled={(defaultValues?.search && !isDirty) || !isValid || isPending}
       >

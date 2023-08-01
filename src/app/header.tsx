@@ -1,9 +1,9 @@
 'use client';
 
+import { NextAnchor } from '@/ui/anchor';
 import * as NavMenu from '@radix-ui/react-navigation-menu';
 import { ChevronDown } from 'lucide-react';
 import { tv } from 'tailwind-variants';
-import { NextAnchor } from '../components/ui/anchor';
 
 // prettier-ignore
 const trigger = tv({ base: 'group flex items-center gap-1 rounded border px-2 py-0.5 data-[state=closed]:border-transparent data-[state=open]:text-brand data-[state=open]:bg-gradient' });
@@ -38,7 +38,8 @@ export default function Header() {
                   </li>
                   <li>
                     <NavMenu.Link asChild>
-                      <NextAnchor href="/" className={linkOption()}>
+                      {/* @ts-ignore */}
+                      <NextAnchor href="/posts/sites/page/1" className={linkOption()}>
                         <span className="text-sm">view posts by site</span>
                         <p className="text-xs text-2">
                           Lorem ipsum dolor sit amet consectetur adipisicing elit.

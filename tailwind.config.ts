@@ -3,7 +3,7 @@ import { fontFamily } from 'tailwindcss/defaultTheme';
 import plugin from 'tailwindcss/plugin';
 
 export default {
-  content: ['./src/components/**/*.{tsx,mdx}', './src/app/**/*.{tsx,mdx}'],
+  content: ['./src/ui/**/*.{tsx,mdx}', './src/app/**/*.{tsx,mdx}'],
   theme: {
     fontWeight: { sans: '400', 'sans-semibold': '700', serif: '500' },
     extend: {
@@ -11,7 +11,7 @@ export default {
         sans: ['var(--font-sans)', ...fontFamily.sans],
         serif: ['var(--font-serif)', ...fontFamily.serif],
       },
-      textColor: { 1: '#d0d0d0', 2: '#8b8b8b' },
+      textColor: { 1: '#c0c0c0', 2: '#8b8b8b' },
       backgroundColor: { 1: '#0e0f11', 2: '#222222' },
       colors: { brand: '#fff' },
       borderColor: { DEFAULT: '#313131', default: '#313131' },

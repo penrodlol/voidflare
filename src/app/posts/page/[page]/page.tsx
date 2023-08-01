@@ -1,7 +1,10 @@
+import Paginator from '@/app/paginator';
 import Search from '@/app/search';
-import PostCard from '@/components/post-card';
+import { formatDate } from '@/libs/formatter';
 import { pageSchema, searchSchema } from '@/libs/schema';
 import supabase, { type Site } from '@/libs/supabase';
+import * as Card from '@/ui/card';
+import { User } from 'lucide-react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
@@ -22,7 +25,7 @@ async function getPosts(page: z.infer<typeof pageSchema>) {
   return data.map((post) => ({ ...post, site: post.site as Site }));
 }
 
-export default async function PostsPage(props: { params: { page: string } }) {
+export default async function Page(props: { params: { page: string } }) {
   const params = z.object({ page: pageSchema }).safeParse(props.params);
   if (!params.success) redirect('/');
 
@@ -42,14 +45,30 @@ export default async function PostsPage(props: { params: { page: string } }) {
           defaultValue={cookies().get('search')?.value.trim()}
         />
       </section>
-      <section>
+      <section className="flex flex-col gap-fluid-4">
         <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {posts.map((post) => (
             <li key={post.slug}>
-              <PostCard {...post} />
+              <Card.Internal href="/">
+                <Card.Header>
+                  <p className="flex items-center gap-2">
+                    <User size={14} aria-hidden /> {post.site?.name}
+                  </p>
+                  <time dateTime={new Date(post.pub_date).toISOString()}>
+                    {formatDate(post.pub_date)}
+                  </time>
+                </Card.Header>
+                <Card.Body>{post.title}</Card.Body>
+              </Card.Internal>
             </li>
           ))}
         </ul>
+        <Paginator
+          prev={`/posts/page/${params.data.page - 1}`}
+          next={`/posts/page/${params.data.page + 1}`}
+          isFirst={params.data.page === 1}
+          isLast={posts.length < 30}
+        />
       </section>
     </div>
   );

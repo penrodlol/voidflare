@@ -1,9 +1,9 @@
-import PostCard from '@/components/post-card';
-import ReleaseCard from '@/components/release-card';
-import { NextAnchor } from '@/components/ui/anchor';
-import { Tab, Tabs } from '@/components/ui/tabs';
+import { formatDate } from '@/libs/formatter';
 import supabase from '@/libs/supabase';
-import { ArrowRight } from 'lucide-react';
+import { NextAnchor } from '@/ui/anchor';
+import * as Card from '@/ui/card';
+import { Tab, Tabs } from '@/ui/tabs';
+import { ArrowRight, User } from 'lucide-react';
 import releases from '../stub';
 
 async function getData() {
@@ -29,11 +29,23 @@ export default async function HomePage() {
             <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {recentPosts?.map((post) => (
                 <li key={post.slug}>
-                  <PostCard {...post} />
+                  {/* @ts-ignore */}
+                  <Card.Internal href={`/posts/sites/${post.siteslug}/${post.slug}`}>
+                    <Card.Header>
+                      <p className="flex items-center gap-2">
+                        <User size={14} aria-hidden /> {post.sitename}
+                      </p>
+                      <time dateTime={new Date(post.pub_date).toISOString()}>
+                        {formatDate(post.pub_date)}
+                      </time>
+                    </Card.Header>
+                    <Card.Body>{post.title}</Card.Body>
+                  </Card.Internal>
                 </li>
               ))}
             </ul>
-            <NextAnchor href="/" className="self-end">
+            {/* @ts-ignore */}
+            <NextAnchor href="/posts/page/1" className="self-end">
               view all posts <ArrowRight size={16} aria-hidden />
             </NextAnchor>
           </Tab>
@@ -41,7 +53,28 @@ export default async function HomePage() {
             <ul className="flex flex-col gap-8">
               {releases?.map((release) => (
                 <li key={release.url}>
-                  <ReleaseCard {...release} />
+                  <Card.External href={release.url}>
+                    <Card.Header>
+                      <p className="flex items-center gap-2">
+                        <User size={14} aria-hidden /> {release.project}
+                      </p>
+                      <time dateTime={new Date(release.published).toISOString()}>
+                        {formatDate(release.published)}
+                      </time>
+                    </Card.Header>
+                    <Card.Body>
+                      <div className="flex flex-col gap-3">
+                        <span className="text-lg">{release.name}</span>
+                        <ol className="ml-2 list-inside list-disc">
+                          {release.content.map((change: any) => (
+                            <li className="text-2" key={change}>
+                              {change}
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    </Card.Body>
+                  </Card.External>
                 </li>
               ))}
             </ul>

@@ -8,7 +8,7 @@ export type InputProps = InputHTMLAttributes<HTMLInputElement> & { icon?: ReactE
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, icon, spellCheck, autoComplete, ...props }, ref) => {
     return (
-      <div className={twMerge('relative rounded border bg-2/10', className)}>
+      <div className={twMerge('relative rounded border bg-1', className)}>
         {icon &&
           cloneElement(icon, {
             'aria-hidden': true,

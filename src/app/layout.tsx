@@ -26,7 +26,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <html lang="en" className={twJoin(taviraj.variable, kaisei.variable, 'ml-[calc(100vw-100%)]')}>
       <body className="mx-auto flex min-h-screen max-w-screen-md flex-col overscroll-none bg-1 text-sm text-1 antialiased">
         <Header />
-        <main className="flex-1">{children}</main>
+        <main className="mb-fluid-4 flex-1">{children}</main>
         <footer></footer>
       </body>
     </html>
