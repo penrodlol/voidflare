@@ -30,7 +30,7 @@ export default function Search(props: InputProps) {
 
   return (
     <form
-      className="flex items-center gap-2 rounded border bg-2/10 p-5 text-xs shadow"
+      className="flex items-center gap-2 rounded border bg-2/10 p-fluid-1 text-xs shadow"
       action={onAction}
     >
       <Input {...props} className="flex-1" icon={<SearchIcon />} {...register('search')} />

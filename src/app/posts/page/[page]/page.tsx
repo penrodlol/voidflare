@@ -34,11 +34,8 @@ export default async function Page(props: { params: { page: string } }) {
 
   return (
     <div className="mt-fluid-4 flex flex-col gap-fluid-3">
-      <section>
-        <h1 className="mb-2 font-serif text-5xl uppercase tracking-widest text-fancy">all posts</h1>
-        <p className="mb-fluid-3 text-base text-2">
-          explore blog posts across <strong>17</strong> different sites
-        </p>
+      <section className="flex flex-col gap-fluid-3">
+        <h1 className="font-serif text-4xl uppercase tracking-widest text-fancy">all posts</h1>
         <Search
           placeholder="search post by title or summary"
           aria-label="search post by title or summary"

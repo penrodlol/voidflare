@@ -15,8 +15,7 @@ export function Tabs({ children, defaultValue, values, ...props }: Props) {
             value={value}
             className={twJoin(
               'flex-1 rounded border p-1 data-[state=inactive]:border-transparent',
-              'data-[state=active]:text-brand data-[state=active]:bg-gradient',
-              'hover:text-brand/90 motion-safe:transition-colors',
+              'hover:text-brand/90 data-[state=active]:bg-gradient motion-safe:transition-colors',
             )}
           >
             {value}

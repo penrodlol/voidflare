@@ -7,7 +7,7 @@ import { twMerge } from 'tailwind-merge';
 import { tv } from 'tailwind-variants';
 
 const base = tv({
-  base: 'block h-full rounded border p-3 bg-gradient hover:text-brand hover:bg-gradient-hover',
+  base: 'block h-full rounded border p-3 text-sm bg-gradient hover:text-brand hover:bg-gradient-hover',
 });
 
 export function Internal({ className, ...props }: LinkProps<string>) {

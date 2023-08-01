@@ -11,7 +11,7 @@ export default {
         sans: ['var(--font-sans)', ...fontFamily.sans],
         serif: ['var(--font-serif)', ...fontFamily.serif],
       },
-      textColor: { 1: '#c0c0c0', 2: '#8b8b8b' },
+      textColor: { 1: '#b0b0b0', 2: '#7b7b7b' },
       backgroundColor: { 1: '#0e0f11', 2: '#222222' },
       colors: { brand: '#fff' },
       borderColor: { DEFAULT: '#313131', default: '#313131' },

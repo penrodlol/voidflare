@@ -5,7 +5,7 @@ import { twJoin } from 'tailwind-merge';
 import 'tailwindcss/tailwind.css';
 import Header from './header';
 
-const taviraj = Maitree({
+const maitree = Maitree({
   weight: ['400', '700'],
   variable: '--font-sans',
   display: 'swap',
@@ -23,10 +23,15 @@ export const metadata: Metadata = { title: 'astral' };
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={twJoin(taviraj.variable, kaisei.variable, 'ml-[calc(100vw-100%)]')}>
-      <body className="mx-auto flex min-h-screen max-w-screen-md flex-col overscroll-none bg-1 text-sm text-1 antialiased">
+    <html lang="en" className={twJoin(maitree.variable, kaisei.variable, 'ml-[calc(100vw-100%)]')}>
+      <body
+        className={twJoin(
+          'mx-auto flex min-h-screen max-w-screen-lg flex-col overscroll-none',
+          'bg-1 px-fluid-4 text-sm text-1 antialiased',
+        )}
+      >
         <Header />
-        <main className="mb-fluid-4 flex-1">{children}</main>
+        <main className="mx-auto mb-fluid-4 w-full max-w-screen-md flex-1">{children}</main>
         <footer></footer>
       </body>
     </html>

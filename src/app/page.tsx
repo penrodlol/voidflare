@@ -65,11 +65,9 @@ export default async function HomePage() {
                     <Card.Body>
                       <div className="flex flex-col gap-3">
                         <span className="text-lg">{release.name}</span>
-                        <ol className="ml-2 list-inside list-disc">
+                        <ol className="ml-2 list-inside list-disc text-2">
                           {release.content.map((change: any) => (
-                            <li className="text-2" key={change}>
-                              {change}
-                            </li>
+                            <li key={change}>{change}</li>
                           ))}
                         </ol>
                       </div>
