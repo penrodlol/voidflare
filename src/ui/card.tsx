@@ -7,7 +7,7 @@ import { twMerge } from 'tailwind-merge';
 import { tv } from 'tailwind-variants';
 
 const base = tv({
-  base: 'block h-full rounded border text-xs p-3 bg-gradient hover:text-brand hover:bg-gradient-hover',
+  base: 'block h-full rounded border p-3 bg-gradient hover:text-brand hover:bg-gradient-hover',
 });
 
 export function Internal({ className, ...props }: LinkProps<string>) {
@@ -27,7 +27,10 @@ export function External({ className, ...props }: AnchorHTMLAttributes<HTMLAncho
 
 export function Header({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div {...props} className={twMerge('flex items-center justify-between text-2', className)} />
+    <div
+      {...props}
+      className={twMerge('flex items-center justify-between text-xs text-2', className)}
+    />
   );
 }
 
