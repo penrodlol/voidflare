@@ -13,7 +13,7 @@ export default {
       },
       textColor: { 1: '#b0b0b0', 2: '#7b7b7b' },
       backgroundColor: { 1: '#0e0f11', 2: '#222222' },
-      colors: { brand: '#fff' },
+      colors: { brand: '#d9d9d9' },
       borderColor: { DEFAULT: '#313131', default: '#313131' },
       spacing: {
         'fluid-1': 'clamp(0.25rem, calc(-0.09rem + 1.71vw), 1.13rem)',

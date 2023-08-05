@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const pageSchema = z.coerce.number().positive().int();
 
-export const searchSchema = z
+export const stringSchema = z
   .string()
   .trim()
   .min(1)

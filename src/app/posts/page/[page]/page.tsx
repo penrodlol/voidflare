@@ -1,7 +1,7 @@
+import Filter from '@/app/filter';
 import Paginator from '@/app/paginator';
-import Search from '@/app/search';
 import { formatDate } from '@/libs/formatter';
-import { pageSchema, searchSchema } from '@/libs/schema';
+import { pageSchema, stringSchema } from '@/libs/schema';
 import supabase, { type Site } from '@/libs/supabase';
 import * as Card from '@/ui/card';
 import { User } from 'lucide-react';
@@ -14,7 +14,7 @@ export const revalidate = 28800;
 async function getPosts(page: z.infer<typeof pageSchema>) {
   let query = supabase.from('post').select('slug, title, pub_date, site(slug, name)');
 
-  const search = searchSchema.safeParse(cookies().get('search')?.value.trim());
+  const search = stringSchema.safeParse(cookies().get('search')?.value.trim());
   if (search.success) query = query.textSearch('title_topic_summary_fts', `'${search.data}'`);
 
   const { data, error } = await query
@@ -25,6 +25,12 @@ async function getPosts(page: z.infer<typeof pageSchema>) {
   return data.map((post) => ({ ...post, site: post.site as Site }));
 }
 
+async function getSites() {
+  const { data, error } = await supabase.from('site').select('name').order('name');
+  if (error) return undefined;
+  return data.map((site) => site.name);
+}
+
 export default async function Page(props: { params: { page: string } }) {
   const params = z.object({ page: pageSchema }).safeParse(props.params);
   if (!params.success) redirect('/');
@@ -32,14 +38,17 @@ export default async function Page(props: { params: { page: string } }) {
   const posts = await getPosts(params.data.page);
   if (!posts) redirect('/');
 
+  const sites = await getSites();
+  if (!sites) redirect('/');
+
   return (
-    <div className="mt-fluid-4 flex flex-col gap-fluid-3">
+    <div className="mt-fluid-4 flex flex-col gap-fluid-5">
       <section className="flex flex-col gap-fluid-3">
         <h1 className="font-serif text-4xl uppercase tracking-widest text-fancy">all posts</h1>
-        <Search
+        <Filter
           placeholder="search post by title or summary"
-          aria-label="search post by title or summary"
           defaultValue={cookies().get('search')?.value.trim()}
+          items={sites}
         />
       </section>
       <section className="flex flex-col gap-fluid-4">
@@ -47,7 +56,7 @@ export default async function Page(props: { params: { page: string } }) {
           {posts.map((post) => (
             <li key={post.slug}>
               {/* @ts-ignore */}
-              <Card.Internal href={`/posts/sites/${post.site.slug}/${post.slug}`}>
+              <Card.Internal href={`/posts/${post.slug}`}>
                 <Card.Header>
                   <p className="flex items-center gap-2">
                     <User size={14} aria-hidden /> {post.site?.name}
