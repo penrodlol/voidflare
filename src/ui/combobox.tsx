@@ -56,11 +56,11 @@ export default function Combobox(props: ComboboxProps) {
           role="combobox"
           aria-expanded={open}
           disabled={props.disabled ?? false}
-          className="w-48 text-xs"
+          className="w-44 text-xs"
         >
           <span className="mr-auto">{props.trigger}</span>
           {applied.size > 0 && (
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-2 text-[10px]">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full border bg-2 text-[10px]">
               {applied.size}
             </span>
           )}

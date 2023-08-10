@@ -14,11 +14,11 @@ export default function View() {
       checked={checked}
       onCheckedChange={setChecked}
     >
-      <Switch.Thumb className="group flex p-0.5">
-        <div className="rounded-sm px-3 py-1.5 transition-colors group-data-[state=unchecked]:bg-2">
+      <Switch.Thumb className="group flex h-full p-0.5">
+        <div className="flex items-center rounded-sm px-3 transition-colors group-data-[state=unchecked]:bg-2">
           <LayoutGrid size={14} aria-hidden />
         </div>
-        <div className="rounded-sm px-3 py-1.5 transition-colors group-data-[state=checked]:bg-2">
+        <div className="flex items-center rounded-sm px-3 transition-colors group-data-[state=checked]:bg-2">
           <LayoutList size={14} aria-hidden />
         </div>
       </Switch.Thumb>

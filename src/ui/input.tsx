@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge';
 export type InputProps = InputHTMLAttributes<HTMLInputElement> & { icon?: ReactElement };
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, icon, spellCheck, autoComplete, ...props }, ref) => {
+  ({ className, icon, spellCheck, autoComplete, type, ...props }, ref) => {
     return (
       <div className={twMerge('relative rounded border bg-1', className)}>
         {icon &&
@@ -20,6 +20,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           spellCheck={spellCheck ?? false}
           autoComplete={autoComplete ?? 'off'}
+          type={type ?? 'text'}
           className={twMerge(
             'relative z-20 w-full bg-transparent py-1.5 pr-3 placeholder:text-2/80',
             'rounded focus:outline-none focus-visible:ring',

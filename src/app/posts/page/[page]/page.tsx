@@ -1,34 +1,21 @@
 import { formatDate } from '@/libs/formatter';
-import { pageSchema, stringSchema } from '@/libs/schema';
-import supabase, { type Site } from '@/libs/supabase';
+import { pageSchema, type PageSchema } from '@/libs/schema';
+import supabase from '@/libs/supabase';
 import * as Card from '@/ui/card';
 import { User } from 'lucide-react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
-import Filter from './filter';
-import View from './view';
+import { getPosts } from './action';
+import Toolbar from './toolbar';
 
 export const revalidate = 28800;
 
-async function getData(page: z.infer<typeof pageSchema>) {
-  let query = supabase.from('post').select('slug, title, pub_date, site(slug, name)');
-
-  const search = stringSchema.safeParse(cookies().get('search')?.value.trim());
-  if (search.success) query = query.textSearch('title_topic_summary_fts', `'${search.data}'`);
-
-  const postPayload = await query
-    .order('pub_date', { ascending: false })
-    .range((page - 1) * 30, (page - 1) * 30 + 29);
-
-  if (postPayload.error) return undefined;
-  const posts = postPayload.data.map((post) => ({ ...post, site: post.site as Site }));
-
-  const sitesPayload = await supabase.from('site').select('name');
-  if (sitesPayload.error) return undefined;
-  const sites = sitesPayload.data.map((site) => site.name);
-
-  return { posts, sites };
+async function getData(page: PageSchema) {
+  const posts = await getPosts(page);
+  const sites = await supabase.from('site').select('name');
+  if (sites.error) return undefined;
+  return { posts, sites: sites.data.map((site) => site.name) };
 }
 
 export default async function Page(props: { params: { page: string } }) {
@@ -44,9 +31,8 @@ export default async function Page(props: { params: { page: string } }) {
         <h1 className="font-serif text-5xl uppercase tracking-widest text-fancy">all posts</h1>
         <p className="max-w-[55ch]">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
       </section>
-      <section className="flex items-center justify-between gap-24 [&_form]:flex-1">
-        <Filter sites={data.sites} />
-        <View />
+      <section>
+        <Toolbar post={cookies().get('post')?.value} sites={data.sites} />
       </section>
       <section>
         <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
