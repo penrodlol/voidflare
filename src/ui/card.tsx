@@ -8,11 +8,11 @@ import { tv } from 'tailwind-variants';
 
 const base = tv({
   base:
-    'block h-full rounded border p-3 hover:text-brand transition-colors relative duration-200 ' +
-    'bg-[linear-gradient(to_bottom_right,#1a1a1a,#0c0c0c)] z-10 before:absolute ' +
-    'before:content-[""] before:inset-0 before:-z-10 before:opacity-0 before:rounded ' +
-    'before:bg-[linear-gradient(to_bottom_right,#2c2c2c,#0c0c0c)] before:transition-opacity ' +
-    'before:duration-200 hover:before:opacity-100',
+    'block h-full rounded border p-3 relative z-10 before:absolute ' +
+    'bg-[linear-gradient(to_bottom_right,#1a1a1a,#0c0c0c)] before:content-[""] ' +
+    'before:inset-0 before:-z-10 before:opacity-0 before:rounded before:transition-opacity ' +
+    'before:bg-[linear-gradient(to_bottom_right,#2c2c2c,#0c0c0c)] before:duration-200 ' +
+    'hover:before:opacity-100',
 });
 
 export function Internal({ className, ...props }: LinkProps<string>) {

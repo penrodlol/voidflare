@@ -1,21 +1,24 @@
 'use client';
 
 import * as Radix from '@radix-ui/react-tabs';
-import { twJoin, twMerge } from 'tailwind-merge';
+import { twJoin } from 'tailwind-merge';
 
 type Props = Radix.TabsProps & { values: Array<string> };
+
+export const Tab = Radix.TabsContent;
 
 export function Tabs({ children, defaultValue, values, ...props }: Props) {
   return (
     <Radix.Root {...props} defaultValue={defaultValue ?? values[0]}>
-      <Radix.List className="flex rounded-lg border p-1.5">
+      <Radix.List className="mb-10 flex rounded border p-1.5">
         {values.map((value) => (
           <Radix.Trigger
             key={value}
             value={value}
             className={twJoin(
-              'flex-1 rounded border p-1 data-[state=inactive]:border-transparent',
-              'data-[state=active]:bg-gradient motion-safe:transition-colors',
+              'flex-1 rounded border p-1 text-2 data-[state=active]:bg-2',
+              'data-[state=inactive]:border-transparent data-[state=active]:text-1',
+              'motion-safe:transition-colors',
             )}
           >
             {value}
@@ -25,8 +28,4 @@ export function Tabs({ children, defaultValue, values, ...props }: Props) {
       {children}
     </Radix.Root>
   );
-}
-
-export function Tab({ className, ...props }: Radix.TabsContentProps) {
-  return <Radix.Content {...props} className={twMerge('mt-10', className)} />;
 }

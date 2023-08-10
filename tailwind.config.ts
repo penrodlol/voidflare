@@ -1,20 +1,18 @@
 import type { Config } from 'tailwindcss';
+import colors from 'tailwindcss/colors';
 import { fontFamily } from 'tailwindcss/defaultTheme';
 import plugin from 'tailwindcss/plugin';
 
 export default {
   content: ['./src/ui/**/*.{tsx,mdx}', './src/app/**/*.{tsx,mdx}'],
   theme: {
-    fontWeight: { sans: '400', 'sans-semibold': '700', serif: '500' },
+    fontWeight: { sans: '400', serif: '500' },
     extend: {
-      fontFamily: {
-        sans: ['var(--font-sans)', ...fontFamily.sans],
-        serif: ['var(--font-serif)', ...fontFamily.serif],
-      },
-      textColor: { 1: '#b0b0b0', 2: '#7b7b7b' },
-      backgroundColor: { 1: '#0e0f11', 2: '#222222' },
-      colors: { brand: '#d9d9d9' },
-      borderColor: { DEFAULT: '#313131', default: '#313131' },
+      fontFamily: { sans: ['var(--font-sans)', ...fontFamily.sans] },
+      backgroundColor: { 1: colors.neutral[950], 2: colors.neutral[800] },
+      textColor: { 1: colors.neutral[400], 2: colors.neutral[500] },
+      borderColor: { DEFAULT: colors.neutral[700] },
+      ringColor: { DEFAULT: colors.neutral[700] },
       spacing: {
         'fluid-1': 'clamp(0.25rem, calc(-0.09rem + 1.71vw), 1.13rem)',
         'fluid-2': 'clamp(0.5rem, calc(0.11rem + 1.95vw), 1.5rem)',
@@ -24,8 +22,6 @@ export default {
         'fluid-6': 'clamp(2rem, calc(0.44rem + 7.8vw), 6rem)',
         'fluid-7': 'clamp(3rem, calc(0.66rem + 11.71vw), 9rem)',
       },
-      // prettier-ignore
-      boxShadow: { DEFAULT: '0 3px 5px -1px rgba(0,0,0,.2), 0 5px 8px 0 rgba(0,0,0,.14), 0 1px 14px 0 rgba(0,0,0,.12)' },
     },
   },
   future: { hoverOnlyWhenSupported: true },
@@ -39,8 +35,6 @@ export default {
           '-webkit-text-stroke': '0.4px #ffffff80',
           '-webkit-text-fill-color': 'transparent',
         },
-        '.bg-gradient': { background: 'linear-gradient(to bottom right, #1a1a1a, #0c0c0c)' },
-        '.bg-gradient-hover': { background: 'linear-gradient(to bottom right, #2c2c2c, #0c0c0c)' },
       });
     }),
   ],

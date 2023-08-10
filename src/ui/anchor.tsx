@@ -4,11 +4,8 @@ import { ArrowUpRight } from 'lucide-react';
 import Link, { type LinkProps } from 'next/link';
 import { forwardRef, type AnchorHTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { tv } from 'tailwind-variants';
 
 type Props = AnchorHTMLAttributes<HTMLAnchorElement>;
-
-const base = tv({ base: 'flex items-center gap-2 hover:text-brand' });
 
 export const Anchor = forwardRef<HTMLAnchorElement, Props>(
   ({ children, className, ...props }: Props, ref) => {
@@ -18,7 +15,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, Props>(
         ref={ref}
         target="_blank"
         rel="nofollow noopener noreferrer"
-        className={twMerge(base(), 'text-brand hover:text-brand/80', className)}
+        className={twMerge('flex items-center gap-2', className)}
       >
         {children} <ArrowUpRight size={16} aria-hidden />
       </a>
@@ -28,7 +25,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, Props>(
 
 export const NextAnchor = forwardRef<HTMLAnchorElement, LinkProps<string>>(
   ({ className, ...props }, ref) => {
-    return <Link {...props} ref={ref} className={twMerge(base(), className)} />;
+    return <Link {...props} ref={ref} className={twMerge('flex items-center gap-2', className)} />;
   },
 );
 

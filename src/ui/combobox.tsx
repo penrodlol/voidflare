@@ -4,82 +4,103 @@ import * as Popover from '@radix-ui/react-popover';
 import { Command } from 'cmdk';
 import { Check, ChevronsUpDown, Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
-import { twJoin } from 'tailwind-merge';
 import Button from './button';
-import { input, inputIcon } from './input';
 
-export type ComboboxProps = { placeholder: string; items: Array<string> };
+export type ComboboxProps = {
+  trigger: string;
+  filter: string;
+  items: Array<string>;
+  disabled?: boolean;
+  onApply?: (items: Array<string>) => void;
+  onClear?: () => void;
+};
 
-export default function Combobox({ placeholder, items: _items }: ComboboxProps) {
-  const items = useMemo(() => _items.map((item) => item.toLowerCase()), [_items]);
+export default function Combobox(props: ComboboxProps) {
   const [open, setOpen] = useState(false);
-  const [applied, setApplied] = useState(false);
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [applied, setApplied] = useState<Set<string>>(new Set());
 
-  const onSelect = (item: string) => {
+  const isEqual = useMemo(() => {
+    if (applied.size === 0 || selected.size !== applied.size) return false;
+    return Array.from(selected).every((item) => applied.has(item));
+  }, [selected, applied]);
+
+  const select = (item: string) => {
     const next = new Set(selected);
-    if (next.has(item)) next.delete(item);
-    else next.add(item);
+    next.has(item) ? next.delete(item) : next.add(item);
     setSelected(next);
   };
 
-  const onOpenChange = (open: boolean) => {
-    if (!open && !applied) setSelected(new Set());
-    setOpen(open);
+  const openChange = (next: boolean) => {
+    setOpen(next);
+    if (applied.size === 0) setSelected(new Set());
+  };
+
+  const clear = () => {
+    setSelected(new Set());
+    setApplied(new Set());
+    if (applied.size > 0) props.onClear?.();
+    setOpen(false);
+  };
+
+  const apply = () => {
+    setApplied(selected);
+    props.onApply?.(Array.from(selected));
+    setOpen(false);
   };
 
   return (
-    <Popover.Root open={open} onOpenChange={onOpenChange}>
+    <Popover.Root open={open} onOpenChange={openChange}>
       <Popover.Trigger asChild>
         <Button
           role="combobox"
-          color="secondary"
           aria-expanded={open}
-          className="w-52 justify-between"
+          disabled={props.disabled ?? false}
+          className="w-48 text-xs"
         >
-          filter sites
+          <span className="mr-auto">{props.trigger}</span>
+          {applied.size > 0 && (
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-2 text-[10px]">
+              {applied.size}
+            </span>
+          )}
           <ChevronsUpDown size={14} className="shrink-0" aria-hidden />
         </Button>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content className="rounded border bg-1 text-xs shadow" sideOffset={5}>
-          <Command loop className="flex max-h-96 w-56 flex-col overflow-hidden">
-            <div className="relative rounded-t border-b" cmdk-input-wrapper="">
-              <Search className={inputIcon()} />
-              <Command.Input placeholder={placeholder} className={twJoin(input(), 'pl-10')} />
+        <Popover.Content className="z-50 rounded border bg-1 text-xs">
+          <Command loop>
+            <div className="relative rounded-t bg-2 p-1">
+              <Search
+                aria-hidden
+                className="absolute left-2 top-1/2 z-10 h-4 w-4 -translate-y-1/2 transform text-2/80"
+              />
+              <Command.Input
+                placeholder={props.filter}
+                className="relative z-20 bg-transparent pl-7 placeholder:text-2/80 focus:outline-none"
+              />
             </div>
-            <Command.Group className="overflow-y-auto p-3">
-              {items.map((item) => (
+            <Command.Empty className="py-3 text-center">no results</Command.Empty>
+            <Command.Group className="px-2 py-3">
+              {props.items.map((item) => (
                 <Command.Item
                   key={item}
-                  onSelect={onSelect}
-                  className={twJoin(
-                    'flex select-none items-center justify-between rounded border border-transparent text-2',
-                    'px-2 py-0.5 hover:border-default hover:text-brand hover:bg-gradient-hover',
-                    'data-[selected=true]:border-default data-[selected=true]:text-brand',
-                    'data-[selected=true]:bg-gradient-hover',
-                  )}
+                  onSelect={select}
+                  className="flex select-none items-center justify-between rounded px-1 data-[selected=true]:bg-2/70"
                 >
                   {item}
-                  {selected.has(item) && <Check size={14} aria-hidden className="shrink-0" />}
+                  {selected.has(item.toLowerCase()) && (
+                    <Check size={14} aria-hidden className="shrink-0" />
+                  )}
                 </Command.Item>
               ))}
             </Command.Group>
           </Command>
-          <div className="flex justify-between rounded-b border-t p-3">
-            <Button
-              color="ghost"
-              size="sm"
-              disabled={selected.size === 0}
-              onClick={() => [setSelected(new Set()), setApplied(false)]}
-            >
+          <div className="flex justify-between bg-2 px-1 py-1.5">
+            <Button color="ghost" size="sm" disabled={selected.size === 0} onClick={clear}>
               clear
             </Button>
-            <Button
-              size="sm"
-              disabled={selected.size === 0}
-              onClick={() => [setApplied(true), setOpen(false)]}
-            >
+            <Button size="sm" disabled={selected.size === 0 || isEqual} onClick={apply}>
               apply
             </Button>
           </div>

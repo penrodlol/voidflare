@@ -6,13 +6,12 @@ import { tv, type VariantProps } from 'tailwind-variants';
 
 const variants = tv({
   base: 'flex select-none items-center gap-2 rounded focus:outline-none',
-  defaultVariants: { color: 'primary', size: 'md' },
+  defaultVariants: { color: 'outline', size: 'md' },
   variants: {
     disabled: { true: 'pointer-events-none opacity-50' },
     color: {
-      primary: 'border bg-gradient hover:text-brand hover:bg-gradient-hover',
-      secondary: 'border bg-1 hover:bg-2/10 hover:text-brand',
-      ghost: 'bg-transparent hover:bg-2/10 hover:text-brand',
+      outline: 'border hover:bg-2/50',
+      ghost: 'bg-transparent hover:bg-2/50',
     },
     size: {
       sm: 'text-xs px-3 py-0.5',
