@@ -10,6 +10,7 @@ export type ComboboxProps = {
   trigger: string;
   filter: string;
   items: Array<string>;
+  defaultSelected?: Array<string>;
   disabled?: boolean;
   onApply?: (items: Array<string>) => void;
   onClear?: () => void;
@@ -17,40 +18,40 @@ export type ComboboxProps = {
 
 export default function Combobox(props: ComboboxProps) {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [applied, setApplied] = useState<Set<string>>(new Set());
+  const [selected, setSelected] = useState<Set<string>>(new Set(props.defaultSelected));
+  const [applied, setApplied] = useState<Set<string>>(new Set(props.defaultSelected));
 
   const isEqual = useMemo(() => {
     if (applied.size === 0 || selected.size !== applied.size) return false;
     return Array.from(selected).every((item) => applied.has(item));
   }, [selected, applied]);
 
-  const select = (item: string) => {
+  const handleSelect = (item: string) => {
     const next = new Set(selected);
     next.has(item) ? next.delete(item) : next.add(item);
     setSelected(next);
   };
 
-  const openChange = (next: boolean) => {
+  const handleOpenChange = (next: boolean) => {
     setOpen(next);
     if (applied.size === 0) setSelected(new Set());
   };
 
-  const clear = () => {
+  const handleClear = () => {
     setSelected(new Set());
     setApplied(new Set());
     if (applied.size > 0) props.onClear?.();
     setOpen(false);
   };
 
-  const apply = () => {
+  const handleApply = () => {
     setApplied(selected);
     props.onApply?.(Array.from(selected));
     setOpen(false);
   };
 
   return (
-    <Popover.Root open={open} onOpenChange={openChange}>
+    <Popover.Root open={open} onOpenChange={handleOpenChange}>
       <Popover.Trigger asChild>
         <Button
           role="combobox"
@@ -85,7 +86,7 @@ export default function Combobox(props: ComboboxProps) {
               {props.items.map((item) => (
                 <Command.Item
                   key={item}
-                  onSelect={select}
+                  onSelect={handleSelect}
                   className="flex select-none items-center justify-between rounded px-1 data-[selected=true]:bg-2/70"
                 >
                   {item}
@@ -97,10 +98,10 @@ export default function Combobox(props: ComboboxProps) {
             </Command.Group>
           </Command>
           <div className="flex justify-between bg-2 px-1 py-1.5">
-            <Button color="ghost" size="sm" disabled={selected.size === 0} onClick={clear}>
+            <Button color="ghost" size="sm" disabled={selected.size === 0} onClick={handleClear}>
               clear
             </Button>
-            <Button size="sm" disabled={selected.size === 0 || isEqual} onClick={apply}>
+            <Button size="sm" disabled={selected.size === 0 || isEqual} onClick={handleApply}>
               apply
             </Button>
           </div>

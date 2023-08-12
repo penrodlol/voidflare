@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge';
 import { tv, type VariantProps } from 'tailwind-variants';
 
 const variants = tv({
-  base: 'flex select-none items-center gap-2 rounded focus:outline-none',
+  base: 'flex select-none items-center gap-1 rounded focus:outline-none',
   defaultVariants: { color: 'outline', size: 'md' },
   variants: {
     disabled: { true: 'pointer-events-none opacity-50' },

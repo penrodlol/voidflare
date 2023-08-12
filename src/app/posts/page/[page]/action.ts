@@ -7,12 +7,12 @@ import { cookies } from 'next/headers';
 import { z } from 'zod';
 
 export async function getPosts(page: PageSchema) {
-  const post = stringSchema.safeParse(cookies().get('post')?.value);
-  const sites = z.array(stringSchema).safeParse(cookies().get('sites')?.value);
+  // const post = stringSchema.safeParse(cookies().get('post')?.value);
+  // const sites = z.array(stringSchema).safeParse(cookies().get('sites')?.value);
 
   let query = supabase.from('post').select('slug, title, pub_date, site(slug, name)');
 
-  if (post.success) query = query.textSearch('title_topic_summary_fts', `'${post.data}'`);
+  // if (post.success) query = query.textSearch('title_topic_summary_fts', `'${post.data}'`);
 
   const { data, error } = await query
     .order('pub_date', { ascending: false })
@@ -38,7 +38,7 @@ export async function filterSites(unsafeSites: Array<StringSchema>) {
   revalidatePath('/posts/page');
 }
 
-export async function reset() {
+export async function resetAll() {
   cookies().delete('post');
   cookies().delete('sites');
   revalidatePath('/posts/page');

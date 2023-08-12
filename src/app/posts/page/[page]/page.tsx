@@ -1,5 +1,5 @@
 import { formatDate } from '@/libs/formatter';
-import { pageSchema, type PageSchema } from '@/libs/schema';
+import { pageSchema, stringSchema, type PageSchema } from '@/libs/schema';
 import supabase from '@/libs/supabase';
 import * as Card from '@/ui/card';
 import { User } from 'lucide-react';
@@ -7,7 +7,8 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { getPosts } from './action';
-import Toolbar from './toolbar';
+import Filter from './filter';
+import View from './view';
 
 export const revalidate = 28800;
 
@@ -25,14 +26,18 @@ export default async function Page(props: { params: { page: string } }) {
   const data = await getData(params.data.page);
   if (!data) redirect('/');
 
+  const post = stringSchema.parse(cookies().get('post')?.value ?? '');
+  const sitesSelected = z.array(stringSchema).parse(cookies().get('sites')?.value.split(',') ?? []);
+
   return (
     <div className="mx-auto mt-fluid-4 flex max-w-screen-md flex-col gap-fluid-4">
       <section className="flex flex-col gap-2 border-b pb-fluid-4">
         <h1 className="font-serif text-5xl uppercase tracking-widest text-fancy">all posts</h1>
         <p className="max-w-[55ch]">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
       </section>
-      <section>
-        <Toolbar post={cookies().get('post')?.value} sites={data.sites} />
+      <section className="flex justify-between text-xs">
+        <Filter sites={data.sites} post={post} sitesSelected={sitesSelected} />
+        <View />
       </section>
       <section>
         <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
