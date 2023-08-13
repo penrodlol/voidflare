@@ -11,8 +11,8 @@ export default {
       fontFamily: { sans: ['var(--font-sans)', ...fontFamily.sans] },
       backgroundColor: { 1: colors.neutral[950], 2: colors.neutral[800] },
       textColor: { 1: colors.neutral[400], 2: colors.neutral[500] },
-      borderColor: { DEFAULT: colors.neutral[700] },
-      ringColor: { DEFAULT: colors.neutral[700] },
+      borderColor: { DEFAULT: colors.neutral[800] },
+      ringColor: { DEFAULT: colors.neutral[800] },
       spacing: {
         'fluid-1': 'clamp(0.25rem, calc(-0.09rem + 1.71vw), 1.13rem)',
         'fluid-2': 'clamp(0.5rem, calc(0.11rem + 1.95vw), 1.5rem)',
@@ -31,7 +31,7 @@ export default {
       addUtilities({
         '.text-fancy': {
           color: 'transparent',
-          textShadow: '-1px -1px 0 hsla(0,0%,100%,.2), 1px 1px 0 rgba(0,0,0,.1)',
+          textShadow: '-1px -1px 0 hsla(0,0%,100%,.49), 1px 1px 0 rgba(0,0,0,.1)',
           '-webkit-text-stroke': '0.4px #ffffff80',
           '-webkit-text-fill-color': 'transparent',
         },
