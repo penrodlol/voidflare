@@ -27,8 +27,7 @@ export default async function Page() {
             <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {recentPosts?.map((post) => (
                 <li key={post.slug}>
-                  {/* @ts-ignore */}
-                  <Card.Internal href={`/posts/${post.slug}`}>
+                  <Card.Root href={`/posts/${post.slug}`}>
                     <Card.Header>
                       <p className="flex items-center gap-2">
                         <User size={14} aria-hidden /> {post.sitename}
@@ -38,7 +37,7 @@ export default async function Page() {
                       </time>
                     </Card.Header>
                     <Card.Body>{post.title}</Card.Body>
-                  </Card.Internal>
+                  </Card.Root>
                 </li>
               ))}
             </ul>

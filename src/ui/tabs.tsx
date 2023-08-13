@@ -3,11 +3,11 @@
 import * as Radix from '@radix-ui/react-tabs';
 import { twJoin } from 'tailwind-merge';
 
-type Props = Radix.TabsProps & { values: Array<string> };
+export type ContentProps = Radix.TabsProps & { values: Array<string> };
 
 export const Tab = Radix.TabsContent;
 
-export function Tabs({ children, defaultValue, values, ...props }: Props) {
+export function Tabs({ children, defaultValue, values, ...props }: ContentProps) {
   return (
     <Radix.Root {...props} defaultValue={defaultValue ?? values[0]}>
       <Radix.List className="mb-10 flex rounded border p-1.5">

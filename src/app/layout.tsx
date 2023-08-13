@@ -25,7 +25,6 @@ export default function Layout({ children }: { children: ReactNode }) {
               {/* prettier-ignore */}
               <ul className="flex gap-4 text-xs">
                 <li><Link href="/posts/page/1">posts</Link></li>
-                {/* @ts-ignore */}
                 <li><Link href="/releases/page/1">releases</Link></li>
                 <li><Link href="/about">about</Link></li>
               </ul>

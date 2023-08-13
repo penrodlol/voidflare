@@ -5,10 +5,11 @@ import Link, { type LinkProps } from 'next/link';
 import { forwardRef, type AnchorHTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-type Props = AnchorHTMLAttributes<HTMLAnchorElement>;
+export type AnchorProps = AnchorHTMLAttributes<HTMLAnchorElement>;
+export type NextAnchorProps = AnchorProps & LinkProps;
 
-export const Anchor = forwardRef<HTMLAnchorElement, Props>(
-  ({ children, className, ...props }: Props, ref) => {
+export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
+  ({ children, className, ...props }, ref) => {
     return (
       <a
         {...props}
@@ -23,7 +24,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, Props>(
   },
 );
 
-export const NextAnchor = forwardRef<HTMLAnchorElement, LinkProps<string>>(
+export const NextAnchor = forwardRef<HTMLAnchorElement, NextAnchorProps>(
   ({ className, ...props }, ref) => {
     return <Link {...props} ref={ref} className={twMerge('flex items-center gap-2', className)} />;
   },

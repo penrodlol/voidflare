@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: { typedRoutes: true, serverActions: true },
+  experimental: { serverActions: true },
 };
 
 export default nextConfig;

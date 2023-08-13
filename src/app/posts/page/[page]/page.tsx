@@ -32,12 +32,12 @@ export default async function Page(props: { params: { page: string } }) {
   const sitesSelected = z.array(stringSchema).parse(sitesCookie ? JSON.parse(sitesCookie) : []);
 
   return (
-    <div className="mx-auto mt-fluid-4 flex max-w-screen-md flex-col gap-fluid-4">
+    <div className="mx-auto mt-fluid-4 flex max-w-screen-md flex-col gap-fluid-3">
       <section className="flex flex-col gap-2 border-b pb-fluid-4">
         <h1 className="font-serif text-5xl uppercase tracking-widest text-fancy">all posts</h1>
         <p className="max-w-[55ch]">Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
       </section>
-      <section className="flex justify-between text-xs">
+      <section className="flex justify-between border-b pb-fluid-3 text-xs">
         <Filter sites={data.sites} post={post} sitesSelected={sitesSelected} />
         <View />
       </section>
@@ -45,8 +45,7 @@ export default async function Page(props: { params: { page: string } }) {
         <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {data.posts?.map((post) => (
             <li key={post.slug}>
-              {/* @ts-ignore */}
-              <Card.Internal href={`/posts/${post.slug}`}>
+              <Card.Root href={`/posts/${post.slug}`}>
                 <Card.Header>
                   <p className="flex items-center gap-2">
                     <User size={14} aria-hidden /> {post.site.name}
@@ -56,7 +55,7 @@ export default async function Page(props: { params: { page: string } }) {
                   </time>
                 </Card.Header>
                 <Card.Body>{post.title}</Card.Body>
-              </Card.Internal>
+              </Card.Root>
             </li>
           ))}
         </ul>
