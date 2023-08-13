@@ -26,8 +26,10 @@ export default async function Page(props: { params: { page: string } }) {
   const data = await getData(params.data.page);
   if (!data) redirect('/');
 
-  const post = stringSchema.parse(cookies().get('post')?.value ?? '');
-  const sitesSelected = z.array(stringSchema).parse(cookies().get('sites')?.value.split(',') ?? []);
+  const postCookie = cookies().get('post')?.value;
+  const sitesCookie = cookies().get('sites')?.value;
+  const post = stringSchema.parse(postCookie ?? '');
+  const sitesSelected = z.array(stringSchema).parse(sitesCookie ? JSON.parse(sitesCookie) : []);
 
   return (
     <div className="mx-auto mt-fluid-4 flex max-w-screen-md flex-col gap-fluid-4">

@@ -1,6 +1,6 @@
 'use server';
 
-import { stringSchema, type PageSchema, type StringSchema } from '@/libs/schema';
+import { stringSchema, type PageSchema } from '@/libs/schema';
 import supabase, { type Site } from '@/libs/supabase';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
@@ -22,7 +22,7 @@ export async function getPosts(page: PageSchema) {
   return data.map((post) => ({ ...post, site: post.site as Site }));
 }
 
-export async function searchPosts(unsafePost: StringSchema) {
+export async function searchPosts(unsafePost: string) {
   const safePost = stringSchema.safeParse(unsafePost);
   if (!safePost.success) return;
 
@@ -30,7 +30,7 @@ export async function searchPosts(unsafePost: StringSchema) {
   revalidatePath('/posts/page');
 }
 
-export async function filterSites(unsafeSites: Array<StringSchema>) {
+export async function filterSites(unsafeSites: Array<string>) {
   const safeSites = z.array(stringSchema).safeParse(unsafeSites);
   if (!safeSites.success) return;
 
