@@ -2,9 +2,10 @@ import env from '@/env/client.mjs';
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-export type Site = Database['public']['Tables']['site']['Row'];
-export type Post = Database['public']['Tables']['post']['Row'];
-export type RecentPosts = Database['public']['Functions']['get_recent_posts']['Returns'];
+type Public = Database['public'];
+
+export type Tables<T extends keyof Public['Tables']> = Public['Tables'][T]['Row'];
+export type Functions<T extends keyof Public['Functions']> = Public['Functions'][T]['Returns'];
 
 export default createClient<Database>(
   env.NEXT_PUBLIC_SUPABASE_URL,
